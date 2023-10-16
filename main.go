@@ -22,4 +22,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not connect to MongoDB: %v", err)
 	}
+
+	defer func() {
+		if err = client.Disconnect(context.Background()); err != nil {
+			log.Fatalf("could not connect to MongoDB: %v", err)
+		}
+	}()
+
+	db := client.Database("golangmongo")
 }
